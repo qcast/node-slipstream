@@ -1,14 +1,19 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import expressLayouts from 'express-ejs-layouts';
 
 var app = express();
+app.use(expressLayouts);
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({
 	extended: true
 })); // for parsing application/x-www-form-urlencoded
 
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
 app.get('/', function(req, res) {
-	res.send('Hello world!');
+	res.render('index', { title: 'The index page!' });
 });
 
 require('./routes/jenkins')(app);

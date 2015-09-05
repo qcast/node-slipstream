@@ -8,9 +8,14 @@ gulp.task('compile', function() {
 		.pipe(gulp.dest('dist'));
 });
 
+gulp.task('views', function() {
+	return gulp.src('views/**/*')
+		.pipe(gulp.dest('dist/views'));
+});
+
 gulp.task('styles', function() {});
 
-gulp.task('server', ['compile', 'styles'], function() {
+gulp.task('server', ['compile', 'views', 'styles'], function() {
 	// Start the server at the beginning of the task 
 	server.run(['dist/app.js']);
 
@@ -31,6 +36,7 @@ gulp.task('serve', function() {
 gulp.task('watch', function() {
 	gulp.watch(['src/**/*.scss'], ['styles']);
 	gulp.watch(['src/**/*.js'], ['compile']);
+	gulp.watch(['views/**/*'], ['views']);
 });
 
 gulp.task('default', ['compile']);
