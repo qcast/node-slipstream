@@ -1,15 +1,27 @@
 <div class="title">
   <%= project.name %>
 </div>
-    <div class="project-card mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Current Build</h2>
-      </div>
-      <div class="mdl-card__media">
-        <img src="<%=project.metadata.icon%>" width="140" height="140" border="0" alt="" style="padding:20px;">
-      </div>
-      <div class="mdl-card__supporting-text">
-        Latest build was <%= build.sha %> from the <%= build.branch %> branch on <%= build.date %> <br>
-        <%= project.commitMessage %>
-      </div>
+<div class="project-wrapper">
+  <div class="project-card mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Current Build (<%=build.displayName%>)</h2>
     </div>
+    <div class="mdl-card__media">
+      <img src="<%=project.metadata.icon%>" width="140" height="140" border="0" alt="" style="padding:20px;">
+    </div>
+    <div class="mdl-card__supporting-text">
+      Latest build was <%= build.sha %> from the <%= build.branch %> branch on <%= build.date %> <br>
+      <%= project.commitMessage %>
+    </div>
+  </div>
+
+  <div class="previous-builds">
+    <span class="previous-title">Previous Builds</span>
+    <% builds.forEach(function(build) { %>
+      <div class="build-card mdl-shadow--2dp">
+        <h2 class="mdl-card__title-text">Build (<%=build.displayName%>)</h2>
+        <%= build.sha %> from the <%= build.branch %> branch on <%= build.date %>
+      </div>
+    <% }); %>
+  </div>
+</div>
