@@ -15,7 +15,8 @@ module.exports = function(app) {
 				res.send(err);
 				console.log(err);
 			} else {
-				console.log(req.get('Host') + '/api/' + app + '/latest/artifact');
+				var artifactUrl = req.protocol + '://' + req.get('Host') + '/api/' + app + '/latest/artifact';
+				console.log(artifactUrl);
 				request.post('https://api.parse.com/1/push')
 					.set('X-Parse-Application-Id', PARSE_APP_ID)
 					.set('X-Parse-REST-API-Key', PARSE_API_KEY)
@@ -23,7 +24,7 @@ module.exports = function(app) {
 						channels: [req.params.app],
 						data: {
 							alert: 'New Build Available',
-							artifact: req.hostname + '/api/' + req.params.app + '/latest/artifact',
+							artifact: artifactUrl,
 							'content-available': 1
 						}
 					}).end(function(err, res) {
