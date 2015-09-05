@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "jenkins-api": "^0.2.8"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
