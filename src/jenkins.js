@@ -49,6 +49,18 @@ jenkins.build = function(app, version) {
 		if (err) {
 			deferred.reject(err);
 		} else {
+			var rev;
+			for (var i=0; i<data.actions.length; i++) {
+				if (data.actions[i].lastBuiltRevision) {
+					rev = data.actions[i].lastBuiltRevision;
+					break;
+				}
+			}
+			if (rev) {
+				data.sha = rev.SHA1.substring(0, 6);
+				data.branch = rev.branch[0].name;
+				data.branch = data.branch.substring(data.branch.lastIndexOf('/') + 1);
+			}
 			deferred.resolve(data);
 		}
 	};
