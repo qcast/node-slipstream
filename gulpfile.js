@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var nodemon = require('gulp-nodemon');
+var concat = require('gulp-concat');
 
 gulp.task('compile', function() {
 	return gulp.src('src/**/*.js')
@@ -13,7 +14,11 @@ gulp.task('views', function() {
 		.pipe(gulp.dest('dist/views'));
 });
 
-gulp.task('styles', function() {});
+gulp.task('styles', function() {
+	return gulp.src('styles/**/*.css')
+		.pipe(concat('all.css'))
+		.pipe(gulp.dest('dist/static/'));
+});
 
 gulp.task('server', ['compile', 'views', 'styles'], function() {
 	// Start the server at the beginning of the task 
@@ -21,7 +26,6 @@ gulp.task('server', ['compile', 'views', 'styles'], function() {
 
 	// Restart the server when file changes 
 	gulp.watch(['dist/**/*.html'], server.notify);
-	gulp.watch(['dist/**/*.scss'], server.notify);
 	gulp.watch(['dist/**/*.js'], server.notify);
 });
 
@@ -34,7 +38,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(['src/**/*.scss'], ['styles']);
+	gulp.watch(['styles/**/*.css'], ['styles']);
 	gulp.watch(['src/**/*.js'], ['compile']);
 	gulp.watch(['views/**/*'], ['views']);
 });

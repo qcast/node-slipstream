@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+app.use('/styles', express.static('styles'));
 require('./routes/jenkins')(app);
 require('./routes/api')(app);
 require('./routes/ui')(app);

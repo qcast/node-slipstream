@@ -14,9 +14,26 @@ module.exports = function(app) {
 					cb(null, job);
 				});
 			}, function(err, jobs) {
-				console.log(jobs);
 				res.render('index', { projects: jobs });
 			});
+		});
+	});
+
+	app.get('/project/:app', function(req, res) {
+		jenkins.job(req.params.app).then(function(job) {
+			jenkins.build(job.name, 'latest').then(function(build) {
+				var rev = build.actions[2].lastBuiltRevision;
+				build.sha = rev.SHA1.substring(0, 6);
+				build.branch = rev.branch[0].name;
+				build.branch = rev.branch[0].name;
+				build.branch = build.branch.substring(build.branch.lastIndexOf('/') + 1);
+				build.date = 'asdf';
+				res.render('project', {project: job, build: build});
+			}).fail(function(err) {
+				res.status(500);
+			});
+		}).fail(function(err) {
+			res.status(500);
 		});
 	});
 };

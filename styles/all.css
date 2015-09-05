@@ -1,0 +1,17 @@
+.title {
+	font-size: 32px;
+	font-weight: 300;
+	margin-left: 32px;
+	margin-top: 32px;
+	margin-bottom: 16px;
+}
+
+.project-list {
+	display: flex;
+	justify-content: center;
+}
+
+.project-card {
+	margin-left: 8px;
+	margin-right: 8px;
+}
