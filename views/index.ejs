@@ -1,6 +1,21 @@
 <div class="title">
-    <%= title %>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-      Button
-    </button>
+  <div class="project-list">
+    <% projects.forEach(function(project) { %>
+      <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text"><%= project.name %></h2>
+        </div>
+        <div class="mdl-card__media">
+          <img src="<%=project.metadata.icon%>" width="140" height="140" border="0" alt="" style="padding:20px;">
+        </div>
+        <div class="mdl-card__supporting-text">
+          Latest build was <%= project.sha %> from the <%= project.branch %> branch on <%= project.date %> <br>
+          <%= project.commitMessage %>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a href="(URL or function)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Related Action</a>
+        </div>
+      </div>
+    <% }) %>
+  </div>
 </div>
