@@ -9,7 +9,7 @@ module.exports = function(app) {
 		var app = req.params.app;
 		var version = req.params.version;
 		jenkins.build(app, version).then(function(build) {
-			var artifactUrl = data.url + 'artifact/' + data.artifacts[0].relativePath;
+			var artifactUrl = build.url + 'artifact/' + build.artifacts[0].relativePath;
 			request.get(artifactUrl).pipe(res);
 		}).fail(function(err) {
 			res.status(500);
