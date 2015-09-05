@@ -1,3 +1,5 @@
+var request = require('superagent');
+
 var jenkinsapi = require('jenkins-api');
 var jenkins = jenkinsapi.init('http://192.168.99.100:8080');
 
@@ -15,6 +17,18 @@ module.exports = function (app) {
 				};
 
 				res.send(response);
+			}
+		});
+	});
+
+	app.get('/api/:app/latest/artifact', function(req, res) {
+		jenkins.last_build_info(req.params.app, function(err, data) {
+			if (err) {
+				res.status(500);
+				res.send(err);
+			} else {
+				var artifactUrl = data.url + 'artifact/' + data.artifacts[0].fileName;
+				request.get(artifactUrl).pipe(res);
 			}
 		});
 	});
