@@ -27,7 +27,7 @@ module.exports = function (app) {
 				res.status(500);
 				res.send(err);
 			} else {
-				var artifactUrl = data.url + 'artifact/' + data.artifacts[0].fileName;
+				var artifactUrl = data.url + 'artifact/' + data.artifacts[0].relativePath;
 				request.get(artifactUrl).pipe(res);
 			}
 		});
