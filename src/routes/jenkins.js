@@ -23,7 +23,7 @@ module.exports = function(app) {
 					.send({
 						channels: [req.params.app],
 						data: {
-							alert: 'New Build Available',
+							alert: 'New Build Ready',
 							artifact: artifactUrl,
 							'content-available': 1
 						}
