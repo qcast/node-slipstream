@@ -12,12 +12,9 @@ app.use(bodyParser.urlencoded({
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(req, res) {
-	res.render('index', { title: 'The index page!' });
-});
-
 require('./routes/jenkins')(app);
 require('./routes/api')(app);
+require('./routes/ui')(app);
 
 var server = app.listen(process.env.PORT || 3000, function() {
 	var host = server.address().address;

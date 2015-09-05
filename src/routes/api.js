@@ -8,42 +8,27 @@ module.exports = function(app) {
 	app.get('/api/:app/:version/artifact', function(req, res) {
 		var app = req.params.app;
 		var version = req.params.version;
-		var callback = function(err, data) {
-			if (err) {
-				res.status(500);
-				res.send(err);
-			} else {
-				var artifactUrl = data.url + 'artifact/' + data.artifacts[0].relativePath;
-				request.get(artifactUrl).pipe(res);
-			}
-		};
-
-		if (version === 'latest') {
-			jenkins.last_build_info(app, callback);
-		} else {
-			jenkins.build_info(app, version, callback);
-		}
+		jenkins.build(app, version).then(function(build) {
+			var artifactUrl = data.url + 'artifact/' + data.artifacts[0].relativePath;
+			request.get(artifactUrl).pipe(res);
+		}).fail(function(err) {
+			res.status(500);
+			res.send(err);
+		});
 	});
 
 	app.get('/api/:app/:version', function(req, res) {
 		var app = req.params.app;
 		var version = req.params.version;
-		var callback = function(err, data) {
-			if (err) {
-				res.status(500);
-				res.send(err);
-			} else {
-				res.send(data);
-			}
-		};
 
-		if (version === 'latest') {
-			jenkins.last_build_info(app, callback);
-		} else {
-			jenkins.build_info(app, version, callback);
-		}
+		jenkins.build(app, version).then(function(build) {
+			res.send(build);
+		}).fail(function(err) {
+			res.status(500);
+			res.send(err);
+		});
 	});
-	
+
 	app.get('/api/projects', function(req, res) {
 		console.log('calling all jobs');
 		jenkins.allJobs().then(function(jobs) {

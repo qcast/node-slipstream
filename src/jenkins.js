@@ -42,4 +42,23 @@ jenkins.job = function(job) {
 	return deferred.promise;
 };
 
+jenkins.build = function(app, version) {
+	var deferred = Q.defer();
+
+	var callback = function(err, data) {
+		if (err) {
+			deferred.reject(err);
+		} else {
+			deferred.resolve(data);
+		}
+	};
+
+	if (version === 'latest') {
+		jenkins.last_build_info(app, callback);
+	} else {
+		jenkins.build_info(app, version, callback);
+	}
+	return deferred.promise;
+};
+
 module.exports = jenkins;
