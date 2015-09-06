@@ -1,0 +1,14 @@
+web:
+  build: .
+  ports:
+   - "3000:3000"
+  volumes:
+   - .:/app
+  links:
+   - jenkins
+jenkins:
+  image: qcast/slipstream-jenkins
+  ports:
+   - "8080:8080"
+  volumes:
+   - ./jenkins:/var/jenkins_home

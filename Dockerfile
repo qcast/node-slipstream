@@ -18,4 +18,4 @@ RUN   \
 # Set the working directory
 WORKDIR   /app
 
-CMD ["/bin/bash"]
+CMD ["node_modules/gulp/bin/gulp.js", "serve"]
